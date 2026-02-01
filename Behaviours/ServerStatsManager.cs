@@ -13,6 +13,8 @@ namespace GorillaServerStats.Behaviours
 
         public int _totalJoinedRooms;
 
+        public Screen _currentScreen = Screen.Screen1;
+
         TimeSpan _time;
         string _playTime = "00:00:00";
         Coroutine _timer;
@@ -51,6 +53,20 @@ namespace GorillaServerStats.Behaviours
             }
         }
 
+        public void ChangeScreen()
+        {
+            switch (_currentScreen)
+            {
+                case Screen.Screen1:
+                    _currentScreen = Screen.Screen2;
+                    break;
+
+                case Screen.Screen2:
+                    _currentScreen = Screen.Screen1;
+                    break;
+            }
+        }
+
         public string GetBoardText()
         {
             if (!PhotonNetwork.InRoom)
@@ -61,15 +77,34 @@ namespace GorillaServerStats.Behaviours
             string _currentRegion = PhotonNetwork.CloudRegion;
             string _removeSillyChar = new string(_currentRegion.Where(char.IsLetter).ToArray()).ToUpper();
 
-            string _statText = $"LOBBY CODE: {PhotonNetwork.CurrentRoom.Name} | TOTAL LOBBYS: {_totalJoinedRooms}\n" +
-                $"PLAYERS: {PhotonNetwork.CurrentRoom.PlayerCount}\n" +
-                $"MASTER: {PhotonNetwork.MasterClient.NickName}\n" +
-                $"ACTIVE PLAYERS: {NetworkSystem.Instance.GlobalPlayerCount()}\n" +
-                $"PLAY TIME: {_playTime}\n" +
-                $"PING: {PhotonNetwork.GetPing()}\n" +
-                $"REGION: {_removeSillyChar.ToUpper()}";
+            switch (_currentScreen)
+            {
+                case Screen.Screen1:
+                    return $"LOBBY CODE: {PhotonNetwork.CurrentRoom.Name} | TOTAL LOBBYS: {_totalJoinedRooms}\n" +
+                    $"PLAYERS: {PhotonNetwork.CurrentRoom.PlayerCount}\n" +
+                    $"MASTER: {PhotonNetwork.MasterClient.NickName}\n" +
+                    $"ACTIVE PLAYERS: {NetworkSystem.Instance.GlobalPlayerCount()}\n" +
+                    $"PLAY TIME: {_playTime}\n" +
+                    $"PING: {PhotonNetwork.GetPing()}\n" +
+                    $"REGION: {_removeSillyChar.ToUpper()}";
 
-            return _statText;
+                case Screen.Screen2:
+                    return $"ERROR\n" +
+                    $"ERROR\n" +
+                    $"ERROR\n" +
+                    $"ERROR\n" +
+                    $"ERROR\n" +
+                    $"ERROR\n" +
+                    $"ERROR";
+            }
+
+            return "ERROR WITH SETTING THE SCREEN";
+        }
+
+        public enum Screen
+        {
+            Screen1,
+            Screen2
         }
     }
 }

@@ -5,7 +5,7 @@ namespace GorillaServerStats.Behaviours
 {
     internal class GStats : MonoBehaviour
     {
-        public void Start() => SetupStatBoards();
+        public void Start() => GorillaTagger.OnPlayerSpawned(SetupStatBoards);
 
         void SetupStatBoards()
         {
