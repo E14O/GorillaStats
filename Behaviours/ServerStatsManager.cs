@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using Photon.Pun;
 using UnityEngine;
+
 
 namespace GorillaServerStats.Behaviours
 {
@@ -53,8 +55,11 @@ namespace GorillaServerStats.Behaviours
         {
             if (!PhotonNetwork.InRoom)
             {
-                return "Hello! Thank you for using ServerStats!\n\nPlease join a room for stats to appear!\n\nOriginal: @its3rr0rgtag | Fixed by: @e14o";
+                return "Hello! Thank you for using ServerStats!\n\nPlease join a room for stats to appear!\n\nOriginal: @its3rr0rgtag\n\nFixed by: @e14o";
             }
+
+            string _currentRegion = PhotonNetwork.CloudRegion;
+            string _removeSillyChar = new string(_currentRegion.Where(char.IsLetter).ToArray()).ToUpper();
 
             string _statText = $"LOBBY CODE: {PhotonNetwork.CurrentRoom.Name} | TOTAL LOBBYS: {_totalJoinedRooms}\n" +
                 $"PLAYERS: {PhotonNetwork.CurrentRoom.PlayerCount}\n" +
@@ -62,7 +67,7 @@ namespace GorillaServerStats.Behaviours
                 $"ACTIVE PLAYERS: {NetworkSystem.Instance.GlobalPlayerCount()}\n" +
                 $"PLAY TIME: {_playTime}\n" +
                 $"PING: {PhotonNetwork.GetPing()}\n" +
-                $"REGION: {PhotonNetwork.CloudRegion.ToUpper()}";
+                $"REGION: {_removeSillyChar.ToUpper()}";
 
             return _statText;
         }
