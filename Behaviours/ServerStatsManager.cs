@@ -55,7 +55,7 @@ namespace GorillaServerStats.Behaviours
         {
             if (!PhotonNetwork.InRoom)
             {
-                return "Hello! Thank you for using ServerStats!\n\nPlease join a room for stats to appear!\n\nOriginal: @its3rr0rgtag\n\nFixed by: @e14o";
+                return "Hello! Thank you for using ServerStats!\n\nPlease join a room for stats to appear!\n\nOriginal: @its3rr0rgtag\nFixed by: @e14o";
             }
 
             string _currentRegion = PhotonNetwork.CloudRegion;
